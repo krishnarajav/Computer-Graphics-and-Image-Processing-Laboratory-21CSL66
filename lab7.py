@@ -1,0 +1,32 @@
+# Write a Program to read a digital image. Split and display image into 4 quadrants, up, down, right and left.
+
+import cv2
+# Function to split the image into four quadrants
+def split_image(image):
+    # height, width, _ = image.shape
+    half_height = image.shape[0] // 2
+    half_width = image.shape[1] // 2
+    # Split the image into four quadrants
+    top_left = image[:half_height, :half_width]
+    top_right = image[:half_height, half_width:]
+    bottom_left = image[half_height:, :half_width]
+    bottom_right = image[half_height:, half_width:]
+    return top_left, top_right, bottom_left, bottom_right
+
+# Function to display images
+def display_images(window_names, images):
+    for img, name in zip(images, window_names):
+        cv2.imshow(name, img)
+    print("Press any key to terminate.")
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    # Read the image
+image_path = "img7.png" # Replace "image.jpg" with the path to your image
+image = cv2.imread(image_path)
+if image is None:
+    print("Failed to load the image.")
+else:
+    # Split the image into quadrants
+    top_left, top_right, bottom_left, bottom_right = split_image(image)
+    # Display the quadrants
+    display_images(["Top Left", "Top Right", "Bottom Left", "Bottom Right"], [top_left, top_right, bottom_left, bottom_right])
